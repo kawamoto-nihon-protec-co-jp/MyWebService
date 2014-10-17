@@ -19,6 +19,7 @@ public final class ProductRestService {
     }
 
 
+
     @Path("/getMessage")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
