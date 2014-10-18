@@ -36,8 +36,9 @@ public final class ProductRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public TransData getCluster(TransData data) {
+        System.out.println("-----recive20141018:" + data.getData());
         TransData responseData = new TransData();
-        responseData.setData(data.getData());
+        responseData.setData("100");
         return responseData;
     }
 
