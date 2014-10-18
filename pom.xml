@@ -30,6 +30,7 @@
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
             <version>${jersey-version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
@@ -41,6 +42,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet-version}</version>
+            <scope>provided</scope>
         </dependency>
         <!--START JERSEY SERVER -->
         <!--START GUICE -->
@@ -88,11 +90,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin-version}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
