@@ -18,6 +18,7 @@ public final class ProductRestService {
         this.service = service;
     }
 
+
     @Path("/getMessage")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
