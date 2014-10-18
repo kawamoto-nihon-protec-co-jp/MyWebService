@@ -9,18 +9,23 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import ngdemo.bean.TransData;
+import ngdemo.config.AppConfig;
+import ngdemo.dao.HealthInfoDao;
+import ngdemo.dao.HealthInfoDaoImpl;
+import ngdemo.entity.HealthInfo;
 import ngdemo.service.IProductService;
+
+import org.seasar.doma.jdbc.tx.LocalTransaction;
 
 @Path("/products")
 public final class ProductRestService {
-
+    LocalTransaction tx = AppConfig.getLocalTransaction();
     private final IProductService service;
 
     @Inject
     public ProductRestService(IProductService service) {
         this.service = service;
     }
-
 
     @Path("/getMessage")
     @GET
@@ -37,6 +42,14 @@ public final class ProductRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public TransData getCluster(TransData data) {
         System.out.println("-----recive20141018:" + data.getData());
+        // 開始
+        tx.begin();
+        HealthInfoDao dao = new HealthInfoDaoImpl();
+        HealthInfo entity = new HealthInfo();
+        entity.setHeartRate(Integer.parseInt(data.getData()));
+        dao.insert(entity);
+        // コミット
+        tx.commit();
         TransData responseData = new TransData();
         responseData.setData("100");
         return responseData;

@@ -1,0 +1,10 @@
+select
+  USER_ID,
+  HEART_RATE,
+  ASSAY_DATE,
+  GPS_LATITUDE,
+  GPS_LONGITUDE
+from
+  HEALTH_INFO
+where
+  HEART_RATE = /* heartRate */1

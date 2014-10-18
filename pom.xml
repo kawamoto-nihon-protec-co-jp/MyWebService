@@ -12,6 +12,8 @@
         <servlet-version>3.1.0</servlet-version>
         <guice-bridge-version>2.3.0</guice-bridge-version>
         <guice-servlet-version>3.0</guice-servlet-version>
+        <mysql-connector-version>5.1.33</mysql-connector-version>
+        <doma1-version>1.37.0</doma1-version>
         <junit-version>4.9</junit-version>
         <mockito-version>1.9.5</mockito-version>
         <jetty-version>9.2.3.v20140905</jetty-version>
@@ -83,6 +85,22 @@
             <scope>test</scope>
         </dependency>
         <!--STOP TEST -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seasar.doma</groupId>
+            <artifactId>doma</artifactId>
+            <version>${doma1-version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.seasar.util</groupId>
+            <artifactId>s2util</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>testapp</finalName>
@@ -109,4 +127,18 @@
             </plugin>
         </plugins>
     </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>maven.seasar.org</id>
+            <name>The Seasar Foundation Maven2 Repository</name>
+            <url>http://maven.seasar.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+      <repository>
+        <id>maven.seasar.org</id>
+        <name>The Seasar Foundation Maven2 Repository</name>
+        <url>http://maven.seasar.org/maven2</url>
+      </repository>
+    </repositories>
 </project>
