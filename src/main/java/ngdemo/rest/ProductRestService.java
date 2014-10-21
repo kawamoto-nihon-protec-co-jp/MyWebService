@@ -17,43 +17,35 @@ import javax.ws.rs.core.MediaType;
 import ngdemo.bean.JsonBean;
 import ngdemo.bean.JsonBeanList;
 import ngdemo.bean.TransData;
-import ngdemo.config.AppConfig;
-import ngdemo.dao.HealthInfoDao;
-import ngdemo.dao.HealthInfoDaoImpl;
+import ngdemo.domain.Product;
 import ngdemo.entity.HealthInfo;
 import ngdemo.service.IProductService;
+import ngdemo.service.impl.HealthInfoServiceImpl;
 
-import org.seasar.doma.jdbc.tx.LocalTransaction;
 import org.seasar.util.convert.StringConversionUtil;
 
 @Path("/products")
 public final class ProductRestService {
-    LocalTransaction tx = AppConfig.getLocalTransaction();
-    private final IProductService service;
-
     @Inject
-    public ProductRestService(IProductService service) {
-        this.service = service;
-    }
+    private IProductService service;
+    @Inject
+    private HealthInfoServiceImpl healthInfoService;
+
 
     @Path("/getMsg")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getProduct() {
-        String ret = "[{\"name\":\"kawamoto1\"},{\"name\":\"product3\"}]";
-//        return this.service.getProducts();
-        return ret;
+    public List<Product> getProduct() {
+//        String ret = "[{\"name\":\"kawamoto1\"},{\"name\":\"product3\"}]";
+        return this.service.getProducts();
+//        return ret;
     }
 
     @GET
     @Path("/getMessage")
     @Produces(MediaType.APPLICATION_JSON)
     public JsonBeanList getMessage(@Context HttpServletResponse res) {
-        tx.begin();
-        HealthInfoDao dao = new HealthInfoDaoImpl();
-
-        List<HealthInfo> datas = dao.selectAll();
-        tx.commit();
+        List<HealthInfo> datas = healthInfoService.findAll();
         List<JsonBean> beans = new ArrayList<JsonBean>();
         for (HealthInfo entity : datas) {
             JsonBean bean = new JsonBean();
@@ -77,14 +69,10 @@ public final class ProductRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public TransData getCluster(TransData data) {
         System.out.println("-----recive20141018:" + data.getData());
-        // 開始
-        tx.begin();
-        HealthInfoDao dao = new HealthInfoDaoImpl();
+//        HealthInfoDao dao = new HealthInfoDaoImpl();
         HealthInfo entity = new HealthInfo();
         entity.setHeartRate(Integer.parseInt(data.getData()));
-        dao.insert(entity);
-        // コミット
-        tx.commit();
+        healthInfoService.insert(entity);
         TransData responseData = new TransData();
         responseData.setData("100");
         return responseData;

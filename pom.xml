@@ -14,7 +14,7 @@
         <guice-servlet-version>3.0</guice-servlet-version>
         <mysql-connector-version>5.1.33</mysql-connector-version>
         <doma1-version>1.37.0</doma1-version>
-        <junit-version>4.9</junit-version>
+        <junit-version>4.11</junit-version>
         <mockito-version>1.9.5</mockito-version>
         <jetty-version>9.2.3.v20140905</jetty-version>
         <maven-war-plugin-version>2.4</maven-war-plugin-version>
@@ -58,20 +58,21 @@
             <artifactId>guice-servlet</artifactId>
             <version>${guice-servlet-version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-persist</artifactId>
+            <version>3.0-rc3</version>
+        </dependency>
         <!--STOP GUICE -->
         <!--START TEST -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit-version}</version>
-            <scope>test</scope>
-        </dependency>
+        <!--
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${mockito-version}</version>
             <scope>test</scope>
         </dependency>
+         -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
@@ -100,6 +101,37 @@
             <groupId>org.seasar.util</groupId>
             <artifactId>s2util</artifactId>
             <version>0.0.1</version>
+        </dependency>
+        <!-- Testing -->
+        <dependency>
+           <groupId>org.jmockit</groupId>
+           <artifactId>jmockit</artifactId>
+           <version>1.12</version>
+           <scope>test</scope>
+        </dependency>
+        <dependency>
+           <groupId>org.jmockit</groupId>
+           <artifactId>jmockit-coverage</artifactId>
+           <version>1.12</version>
+           <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.5.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>

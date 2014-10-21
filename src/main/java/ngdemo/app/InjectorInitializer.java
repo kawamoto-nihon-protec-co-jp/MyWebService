@@ -1,6 +1,6 @@
 package ngdemo.app;
 
-import ngdemo.service.ServiceModule;
+import ngdemo.guice.CommonModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -12,7 +12,7 @@ public final class InjectorInitializer extends GuiceServletContextListener {
 
     @Override
     protected Injector getInjector() {
-        INJECTOR = Guice.createInjector(new ServiceModule());
+        INJECTOR = Guice.createInjector(new CommonModule());
         return INJECTOR;
 
     }
