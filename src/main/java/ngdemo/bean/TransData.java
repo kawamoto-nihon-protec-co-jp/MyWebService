@@ -5,14 +5,59 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class TransData {
-    private String data;
+    private String userId;
+    private String heartRate;
+    private String assayDate;
+    private String gpsLatitude;
+    private String gpsLongitude;
+    private String status = "9";
 
-    public String getData() {
-        return data;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getHeartRate() {
+        return heartRate;
+    }
+
+    public void setHeartRate(String heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public String getAssayDate() {
+        return assayDate;
+    }
+
+    public void setAssayDate(String assayDate) {
+        this.assayDate = assayDate;
+    }
+
+    public String getGpsLatitude() {
+        return gpsLatitude;
+    }
+
+    public void setGpsLatitude(String gpsLatitude) {
+        this.gpsLatitude = gpsLatitude;
+    }
+
+    public String getGpsLongitude() {
+        return gpsLongitude;
+    }
+
+    public void setGpsLongitude(String gpsLongitude) {
+        this.gpsLongitude = gpsLongitude;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -22,7 +67,7 @@ public class TransData {
 
         TransData cluster = (TransData) o;
 
-        if (data != cluster.data) return false;
+        if (heartRate != cluster.heartRate) return false;
 
         return true;
     }
@@ -36,7 +81,7 @@ public class TransData {
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("Cluster");
-        sb.append("{data=").append(data);
+        sb.append("{data=").append(heartRate);
         sb.append('}');
         return sb.toString();
     }

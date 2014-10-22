@@ -22,7 +22,10 @@ import ngdemo.entity.HealthInfo;
 import ngdemo.service.IProductService;
 import ngdemo.service.impl.HealthInfoServiceImpl;
 
+import org.seasar.util.convert.BigDecimalConversionUtil;
+import org.seasar.util.convert.IntegerConversionUtil;
 import org.seasar.util.convert.StringConversionUtil;
+import org.seasar.util.convert.TimestampConversionUtil;
 
 @Path("/products")
 public final class ProductRestService {
@@ -52,6 +55,8 @@ public final class ProductRestService {
             bean.userId = entity.getUserId();
             bean.heartRate = StringConversionUtil.toString(entity.getHeartRate());
             bean.assayDate = StringConversionUtil.toString(entity.getAssayDate());
+            bean.gpsLatitude = StringConversionUtil.toString(entity.getGpsLatitude());
+            bean.gpsLongitude = StringConversionUtil.toString(entity.getGpsLongitude());
             beans.add(bean);
         }
         JsonBeanList json = new JsonBeanList();
@@ -68,13 +73,17 @@ public final class ProductRestService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public TransData getCluster(TransData data) {
-        System.out.println("-----recive20141018:" + data.getData());
+        System.out.println("-----recive20141018:" + data.getHeartRate());
 //        HealthInfoDao dao = new HealthInfoDaoImpl();
         HealthInfo entity = new HealthInfo();
-        entity.setHeartRate(Integer.parseInt(data.getData()));
+        entity.setUserId(data.getUserId());
+        entity.setHeartRate(IntegerConversionUtil.toInteger(data.getHeartRate()));
+        entity.setAssayDate(TimestampConversionUtil.toSqlTimestamp(data.getAssayDate()));
+        entity.setGpsLatitude(BigDecimalConversionUtil.toBigDecimal(data.getGpsLatitude()));
+        entity.setGpsLongitude(BigDecimalConversionUtil.toBigDecimal(data.getGpsLongitude()));
         healthInfoService.insert(entity);
         TransData responseData = new TransData();
-        responseData.setData("100");
+        responseData.setStatus("0");
         return responseData;
     }
 
