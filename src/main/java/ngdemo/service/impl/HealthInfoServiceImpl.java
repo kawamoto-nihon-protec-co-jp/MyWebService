@@ -18,6 +18,7 @@ public class HealthInfoServiceImpl implements HealthInfoService {
         return healthInfoDao.selectAll();
     }
 
+    @DomaTransactionAttribute
     public int insert(HealthInfo entity) {
         return healthInfoDao.insert(entity);
     }
