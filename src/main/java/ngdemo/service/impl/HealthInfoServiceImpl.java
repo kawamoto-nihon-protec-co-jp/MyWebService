@@ -19,6 +19,16 @@ public class HealthInfoServiceImpl implements HealthInfoService {
     }
 
     @DomaTransactionAttribute
+    public List<HealthInfo> findForChartCols() {
+        return healthInfoDao.selectForChartCols();
+    }
+
+    @DomaTransactionAttribute
+    public List<HealthInfo> findForChartRows() {
+        return healthInfoDao.selectForChartRows();
+    }
+
+    @DomaTransactionAttribute
     public int insert(HealthInfo entity) {
         return healthInfoDao.insert(entity);
     }

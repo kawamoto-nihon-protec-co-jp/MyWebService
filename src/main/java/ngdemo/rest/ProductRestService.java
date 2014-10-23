@@ -1,7 +1,6 @@
 package ngdemo.rest;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,8 +13,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import ngdemo.bean.ChartBeanList;
+import ngdemo.bean.ChartColsBean;
+import ngdemo.bean.ChartRowsBean;
+import ngdemo.bean.ChartRowsList;
 import ngdemo.bean.JsonBean;
 import ngdemo.bean.JsonBeanList;
+import ngdemo.bean.JsonChartBeanList;
 import ngdemo.bean.TransData;
 import ngdemo.domain.Product;
 import ngdemo.entity.HealthInfo;
@@ -26,6 +30,7 @@ import org.seasar.util.convert.BigDecimalConversionUtil;
 import org.seasar.util.convert.IntegerConversionUtil;
 import org.seasar.util.convert.StringConversionUtil;
 import org.seasar.util.convert.TimestampConversionUtil;
+import org.seasar.util.lang.StringUtil;
 
 @Path("/products")
 public final class ProductRestService {
@@ -45,6 +50,63 @@ public final class ProductRestService {
     }
 
     @GET
+    @Path("/getChart")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ChartBeanList getChart(@Context HttpServletResponse res) {
+        List<HealthInfo> colDatas = healthInfoService.findForChartCols();
+        ChartBeanList charBeanList = new ChartBeanList();
+        //col
+        ChartColsBean colsBean = new ChartColsBean();
+        List<ChartColsBean> cols = new ArrayList<ChartColsBean>();
+        colsBean.label = "heartRate";
+        colsBean.type = "string";
+        cols.add(colsBean);
+        for (HealthInfo entity : colDatas) {
+            colsBean = new ChartColsBean();
+            colsBean.label = entity.getUserId();
+            colsBean.type = "number";
+            cols.add(colsBean);
+        }
+        charBeanList.cols = cols;
+
+        //row
+        List<ChartRowsList> rows = new ArrayList<ChartRowsList>();
+        ChartRowsList rowsList = new ChartRowsList();
+        List<HealthInfo> rowDatas = healthInfoService.findForChartRows();
+        List<ChartRowsBean> rowsBeanList = new ArrayList<ChartRowsBean>();
+        String lastAssayDateFmt = "";
+        for (HealthInfo entity : rowDatas) {
+            ChartRowsBean rowsBean = new ChartRowsBean();
+            if (!StringUtil.equals(entity.getAssayDateFmt(), lastAssayDateFmt)) {
+                if (StringUtil.isNotEmpty(lastAssayDateFmt)) {
+                    rowsList.c = rowsBeanList;
+                    rows.add(rowsList);
+                    rowsBeanList = new ArrayList<ChartRowsBean>();
+                    rowsList = new ChartRowsList();
+                }
+                rowsBean = new ChartRowsBean();
+                rowsBean.v = entity.getAssayDateFmt();
+                rowsBeanList.add(rowsBean);
+            }
+            rowsBean = new ChartRowsBean();
+            rowsBean.v = StringConversionUtil.toString(entity.getHeartRate());
+            rowsBeanList.add(rowsBean);
+            lastAssayDateFmt = entity.getAssayDateFmt();
+        }
+        rowsList.c = rowsBeanList;
+        rows.add(rowsList);
+        charBeanList.rows = rows;
+        JsonChartBeanList json = new JsonChartBeanList();
+        List<ChartBeanList> charBeans = new ArrayList<ChartBeanList>();
+        charBeans.add(charBeanList);
+        json.data = charBeans;
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+        return charBeanList;
+    }
+
+    @GET
     @Path("/getMessage")
     @Produces(MediaType.APPLICATION_JSON)
     public JsonBeanList getMessage(@Context HttpServletResponse res) {
@@ -61,7 +123,6 @@ public final class ProductRestService {
         }
         JsonBeanList json = new JsonBeanList();
         json.data = beans;
-        LinkedHashMap<String, JsonBean> m = new LinkedHashMap<String, JsonBean>();
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
         res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");

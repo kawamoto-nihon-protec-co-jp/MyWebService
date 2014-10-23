@@ -19,6 +19,12 @@ public interface HealthInfoDao {
     @Select
     List<HealthInfo> selectAll();
 
+    @Select
+    List<HealthInfo> selectForChartCols();
+
+    @Select
+    List<HealthInfo> selectForChartRows();
+
     /**
      * @param entity
      * @return affected rows
