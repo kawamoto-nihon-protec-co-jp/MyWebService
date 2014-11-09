@@ -33,7 +33,9 @@ public class DomaLocalTxInterceptor implements MethodInterceptor {
        Object result = null;
        if (transactional != null) {
            try {
-               tx.begin();
+               if (!tx.isActive()) {
+                   tx.begin();
+               }
                result = invocation.proceed();
                tx.commit();
            } finally {
