@@ -12,8 +12,10 @@
         <servlet-version>3.1.0</servlet-version>
         <guice-bridge-version>2.3.0</guice-bridge-version>
         <guice-servlet-version>3.0</guice-servlet-version>
+        <guice-persist-version>3.0</guice-persist-version>
         <mysql-connector-version>5.1.33</mysql-connector-version>
         <doma1-version>1.37.0</doma1-version>
+        <s2util-version>0.0.1</s2util-version>
         <junit-version>4.11</junit-version>
         <mockito-version>1.9.5</mockito-version>
         <jetty-version>9.2.3.v20140905</jetty-version>
@@ -22,7 +24,6 @@
         <maven-compiler-plugin-version>3.2</maven-compiler-plugin-version>
     </properties>
     <dependencies>
-        <!--START JERSEY SERVER -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
@@ -46,8 +47,6 @@
             <version>${servlet-version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--START JERSEY SERVER -->
-        <!--START GUICE -->
         <dependency>
             <groupId>org.glassfish.hk2</groupId>
             <artifactId>guice-bridge</artifactId>
@@ -61,31 +60,8 @@
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-persist</artifactId>
-            <version>3.0-rc3</version>
+            <version>${guice-persist-version}</version>
         </dependency>
-        <!--STOP GUICE -->
-        <!--START TEST -->
-        <!--
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>${mockito-version}</version>
-            <scope>test</scope>
-        </dependency>
-         -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <!--STOP TEST -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -100,7 +76,19 @@
         <dependency>
             <groupId>org.seasar.util</groupId>
             <artifactId>s2util</artifactId>
-            <version>0.0.1</version>
+            <version>${s2util-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty-version}</version>
+            <scope>test</scope>
         </dependency>
         <!-- Testing -->
         <dependency>

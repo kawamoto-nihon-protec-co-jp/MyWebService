@@ -1,38 +1,38 @@
 <web-app>
-	<display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
 
-	<servlet>
-		<servlet-name>jersey-servlet</servlet-name>
+    <servlet>
+        <servlet-name>jersey-servlet</servlet-name>
 
-		<servlet-class>
-			org.glassfish.jersey.servlet.ServletContainer
-		</servlet-class>
+        <servlet-class>
+            org.glassfish.jersey.servlet.ServletContainer
+        </servlet-class>
 
-		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>ngdemo.app.Application</param-value>
-		</init-param>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>com.example.kpp.app.Application</param-value>
+        </init-param>
 
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
-	<servlet-mapping>
-		<servlet-name>jersey-servlet</servlet-name>
-		<url-pattern>/api/*</url-pattern>
-	</servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>jersey-servlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
 
-	<filter>
-		<filter-name>guice-filter</filter-name>
-		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
-		<async-supported>true</async-supported>
-	</filter>
+    <filter>
+        <filter-name>guice-filter</filter-name>
+        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
 
-	<filter-mapping>
-		<filter-name>guice-filter</filter-name>
-		<url-pattern>/api/*</url-pattern>
-	</filter-mapping>
+    <filter-mapping>
+        <filter-name>guice-filter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
 
-	<listener>
-		<listener-class>ngdemo.app.InjectorInitializer</listener-class>
-	</listener>
+    <listener>
+        <listener-class>com.example.kpp.app.InjectorInitializer</listener-class>
+    </listener>
 </web-app>
