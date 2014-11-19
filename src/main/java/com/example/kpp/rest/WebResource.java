@@ -29,6 +29,7 @@ import com.example.kpp.bean.JsonChartBeanList;
 import com.example.kpp.bean.TransData;
 import com.example.kpp.entity.HealthInfo;
 import com.example.kpp.service.HealthInfoService;
+import com.example.kpp.util.DateFormatUtil;
 
 /**
  * Resource提供クラス
@@ -51,7 +52,7 @@ public final class WebResource {
     public ChartBeanList createChartData(@Context HttpServletResponse res) {
         List<HealthInfo> colDatas = healthInfoService.findForChartCols();
         ChartBeanList charBeanList = new ChartBeanList();
-        //col
+        // col
         ChartColsBean colsBean = new ChartColsBean();
         List<ChartColsBean> cols = new ArrayList<ChartColsBean>();
         colsBean.label = "heartRate";
@@ -65,7 +66,7 @@ public final class WebResource {
         }
         charBeanList.cols = cols;
 
-        //row
+        // row
         List<ChartRowsList> rows = new ArrayList<ChartRowsList>();
         ChartRowsList rowsList = new ChartRowsList();
         List<HealthInfo> rowDatas = healthInfoService.findForChartRows();
@@ -97,9 +98,6 @@ public final class WebResource {
         List<ChartBeanList> charBeans = new ArrayList<ChartBeanList>();
         charBeans.add(charBeanList);
         json.data = charBeans;
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
-        res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
         return charBeanList;
     }
 
@@ -118,16 +116,13 @@ public final class WebResource {
             JsonBean bean = new JsonBean();
             bean.userId = entity.getUserId();
             bean.heartRate = StringConversionUtil.toString(entity.getHeartRate());
-            bean.assayDate = StringConversionUtil.toString(entity.getAssayDate());
+            bean.assayDate = DateFormatUtil.getDateFormatConvert(entity.getAssayDate());
             bean.gpsLatitude = StringConversionUtil.toString(entity.getGpsLatitude());
             bean.gpsLongitude = StringConversionUtil.toString(entity.getGpsLongitude());
             beans.add(bean);
         }
         JsonBeanList json = new JsonBeanList();
         json.data = beans;
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
-        res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
         return json;
     }
 

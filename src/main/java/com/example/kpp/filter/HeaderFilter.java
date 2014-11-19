@@ -7,26 +7,27 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 import com.google.inject.Singleton;
 
 /**
- * エンコードフィルタークラス
+ * ヘッダー設定フィルタークラス
  * @author T.Kawamoto
  * @version 1.0
  */
 @Singleton
-public class EncodeingFilter implements Filter {
-    // 文字コード
-    private final static String encoding = "UTF-8";
-
+public class HeaderFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        request.setCharacterEncoding(encoding);
-        response.setContentType("text/html; charset=" + encoding);
+        System.out.println("Header Filter");
+        HttpServletResponse res = (HttpServletResponse) response;
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, DELETE, OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
         chain.doFilter(request, response);
     }
 

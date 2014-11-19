@@ -16,10 +16,11 @@ import com.example.kpp.guice.CommonModule;
 import com.example.kpp.guice.GuiceModules;
 import com.example.kpp.guice.GuiceTestRunner;
 import com.example.kpp.service.impl.HealthInfoServiceImpl;
+import com.sun.jersey.test.framework.JerseyTest;
 
 @RunWith(GuiceTestRunner.class)
 @GuiceModules(CommonModule.class)
-public class ProductRestServiceTest {
+public class ProductRestServiceTest extends JerseyTest {
 
     /** HttpServletRequestのモック  */
     @Mocked
